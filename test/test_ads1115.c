@@ -41,6 +41,7 @@ void test_iniciar_canal_modo_single_por_consulta(void){
     signalADS1115 channelUno;
 
     ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
+    
     TEST_ASSERT_TRUE(ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND));
 }
 
@@ -49,6 +50,7 @@ void test_iniciar_lectura_por_consulta(void){
     signalADS1115 channelUno;
 
     ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
+
     ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND);
     TEST_ASSERT_TRUE(ADS1115_startConversionPolled(&channelUno,SLAVE_ADDRES_GND));
 }
@@ -64,20 +66,21 @@ void test_recuperar_un_valor_de_lectura_de_adc_por_consulta(void){
 
     TEST_ASSERT_TRUE(ADS1115_gpioReadyInit(READY_port,READY_pin));
     ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND);
+    ADS1115_startConversionPolled(&channelUno,SLAVE_ADDRES_GND);
     TEST_ASSERT_EQUAL_HEX16(CONVERSION_VALUE_READ,ADS1115_getConversionPolled(&channelUno,SLAVE_ADDRES_GND));
 }
 
 //Convertir lectura obtenida en binario a lectura flotante (decimal con unidades en volts)
 void test_convertir_lectura_binaria_a_flotante(void){
     signalADS1115 channelUno;
-    float result = 0.0;
+    float result = (FULL_RANGE_PG0/CUENTA_MAXIMA_ADC)*CONVERSION_VALUE_READ;
 
     ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
     ADS1115_Receive_fake.custom_fake = auxiliar_ads1115_receive;
     ADS1115_gpioReadyRead_fake.custom_fake = auxiliar_ads1115_gpioReadyRead;
 
     ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND);
-    result = (FULL_RANGE_PG0/CUENTA_MAXIMA_ADC)*CONVERSION_VALUE_READ; 
+    ADS1115_startConversionPolled(&channelUno,SLAVE_ADDRES_GND); 
     ADS1115_getConversionPolled(&channelUno,SLAVE_ADDRES_GND);
     TEST_ASSERT_EQUAL_FLOAT(result,ADS1115_getValueVoltage(&channelUno));
 }
@@ -87,6 +90,7 @@ void test_cambiar_parametros_de_configuracion_de_un_canal(void){
     signalADS1115 channelCero;
 
     ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
+
     ADS1115_channelInit(&channelCero,SINGLE_MODE_A0);
     TEST_ASSERT_TRUE(ADS1115_updateThreshold(SLAVE_ADDRES_GND,UMBRAL_LOW,UMBRAL_HIGH));
     ADS1115_updateComparatorMode(&channelCero,COMPARATOR_WINDOW);
