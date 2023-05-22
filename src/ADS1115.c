@@ -33,7 +33,7 @@ void ADS1115_channelInit(signalADS1115 * signalADS1115_port,uint8_t channel){
  *Se carga los valores de umbrales adecuados para activar el funcionamiento del pin READY.
  *Channel:SINGLE_MODE_AO,SINGLE_MODE_A1,SINGLE_MODE_A2, SINGLE_MODE_A3
  *        DIFERENTIAL_MODE_A0_A1,DIFERENTIAL_MODE_A0_A3,DIFERENTIAL_MODE_A1_A3,DIFERENTIAL_MODE_A2_A3*/
-void ADS1115_channelInitPolled(signalADS1115 * signalADS1115_port,uint8_t channel,uint8_t slaveAddres){
+bool ADS1115_channelInitPolled(signalADS1115 * signalADS1115_port,uint8_t channel,uint8_t slaveAddres){
 	signalADS1115_port->channel=channel;
 	signalADS1115_port->pga=PGA_0;
 	signalADS1115_port->operationMode=MODE_SINGLE_SHOT;
@@ -44,7 +44,12 @@ void ADS1115_channelInitPolled(signalADS1115 * signalADS1115_port,uint8_t channe
 	signalADS1115_port->stateComparator=AFTER_ONE_CONVERSION;
 	signalADS1115_port->countConversion=0;
 
-	ADS1115_updateThreshold(slaveAddres,READY_UMBRAL_LOW,READY_UMBRAL_HIGH);
+	if(FUNCTION_OK==ADS1115_updateThreshold(slaveAddres,READY_UMBRAL_LOW,READY_UMBRAL_HIGH)){
+		return FUNCTION_OK;
+	}
+	else{
+		return FUNCTION_FALLED;
+	}
 }
 
 /*--------------------------------------------------------*/
@@ -226,15 +231,24 @@ void ADS1115_updateStateComparator(signalADS1115 * signalADS1115_port,uint8_t st
 
 /*ADS1115_updateThreshold:
  *Función que actualiza los valores de umbrales para la comparacion.*/
-void ADS1115_updateThreshold(uint8_t slaveAddres,uint16_t umbralLow, uint16_t	umbralHigh){
+bool ADS1115_updateThreshold(uint8_t slaveAddres,uint16_t umbralLow, uint16_t	umbralHigh){
 	  uint8_t wordWrite[3]={0};
 	  wordWrite[0]=LO_THRESH_REG;
 	  wordWrite[1]=(umbralLow>>8);
 	  wordWrite[2]=umbralLow;
-	  ADS1115_Transmit(slaveAddres, wordWrite,3);
+	  
+	  if(FUNCTION_FALLED==ADS1115_Transmit(slaveAddres, wordWrite,3)){
+		return FUNCTION_FALLED;
+	  }
 
 	  wordWrite[0]=HI_THRESH_REG;
 	  wordWrite[1]=(umbralHigh>>8);
 	  wordWrite[2]=umbralHigh;
-	  ADS1115_Transmit(slaveAddres, wordWrite,3);
+
+	  if(FUNCTION_FALLED==ADS1115_Transmit(slaveAddres, wordWrite,3)){
+		return FUNCTION_FALLED;
+	  }
+	  else{
+		return FUNCTION_OK;
+	  }
 }

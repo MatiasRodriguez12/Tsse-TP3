@@ -8,6 +8,7 @@
 #ifndef API_INC_ADS1115_H_
 #define API_INC_ADS1115_H_
 #include <stdint.h>
+#include <stdbool.h>
 
 /*----------------------------------*/
 /*-----------SLAVE ADDRESS----------*/
@@ -95,6 +96,12 @@
 #define	CUENTA_MAXIMA_ADC	32768
 /*----------------------------------*/
 
+/*----------------------------------*/
+/*--------------OTROS---------------*/
+#define FUNCTION_OK     true
+#define FUNCTION_FALLED false
+/*----------------------------------*/
+
 /*--------------------------------------------------------------------------*/
 /*----Estructura que almacenará los parametros de un canal a utilizar-------*/
 typedef struct{
@@ -125,7 +132,7 @@ void ADS1115_channelInit(signalADS1115 * signalADS1115_port,uint8_t channel);
  *Se carga los valores de umbrales adecuados para activar el funcionamiento del pin READY.
  *Channel:SINGLE_MODE_AO,SINGLE_MODE_A1,SINGLE_MODE_A2, SINGLE_MODE_A3
  *        DIFERENTIAL_MODE_A0_A1,DIFERENTIAL_MODE_A0_A3,DIFERENTIAL_MODE_A1_A3,DIFERENTIAL_MODE_A2_A3*/
-void ADS1115_channelInitPolled(signalADS1115 * signalADS1115_port,uint8_t channel,uint8_t slaveAddres);
+bool ADS1115_channelInitPolled(signalADS1115 * signalADS1115_port,uint8_t channel,uint8_t slaveAddres);
 
 /*--------------------------------------------------------*/
 /*-----------------CONVERSION FUNCTIONS-------------------*/
@@ -190,6 +197,6 @@ void ADS1115_updateStateComparator(signalADS1115 * signalADS1115_port,uint8_t st
 
 /*ADS1115_updateThreshold:
  *Función que actualiza los valores de umbrales para la comparacion.*/
-void ADS1115_updateThreshold(uint8_t slaveAddres,uint16_t umbralLow, uint16_t	umbralHigh);
+bool ADS1115_updateThreshold(uint8_t slaveAddres,uint16_t umbralLow, uint16_t	umbralHigh);
 
 #endif /* API_INC_ADS1115_H_ */

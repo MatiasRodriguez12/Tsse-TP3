@@ -46,7 +46,7 @@ bool ADS1115_gpioReadyRead(void);
  *Parametros: slaveAddres - Dirección del esclavo.
  *			  word - datos a enviar.
  *			  nroBytes - Cantidad de bytes a enviar*/
-void ADS1115_Transmit(uint8_t slaveAddres, uint8_t *word,uint16_t nroBytes);
+bool ADS1115_Transmit(uint8_t slaveAddres, uint8_t *word,uint16_t nroBytes);
 
 /*ADS1115_Receive:
  *Función que lee los datos del esclavo.
