@@ -164,7 +164,7 @@ uint16_t ADS1115_signalConversion(signalADS1115 * signalADS1115_port,uint8_t sla
 /*ADS1115_startConversionPolled:
  *Función que inicia la conversión.
  *Es utilizada cuando se usa el sensor con la intervención del pin READY.*/
-void ADS1115_startConversionPolled(signalADS1115 * signalADS1115_port,uint8_t slaveAddres);
+bool ADS1115_startConversionPolled(signalADS1115 * signalADS1115_port,uint8_t slaveAddres);
 
 /*ADS1115_getConversionPolled:
  *Función que devuelve el valor de la conversión.

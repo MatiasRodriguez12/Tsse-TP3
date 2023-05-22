@@ -44,6 +44,15 @@ void test_iniciar_canal_modo_single_por_consulta(void){
     TEST_ASSERT_TRUE(ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND));
 }
 
+//Inicializar pedido de lectura por consulta
+void test_iniciar_lectura_por_consulta(void){
+    signalADS1115 channelUno;
+
+    ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
+    ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND);
+    TEST_ASSERT_TRUE(ADS1115_startConversionPolled(&channelUno,SLAVE_ADDRES_GND));
+}
+
 //Recuperar lectura del ads1115 - lectura por consulta
 void test_recuperar_un_valor_de_lectura_de_adc_por_consulta(void){
     signalADS1115 channelUno;

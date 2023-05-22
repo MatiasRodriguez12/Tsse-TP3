@@ -86,13 +86,18 @@ uint16_t ADS1115_signalConversion(signalADS1115 * signalADS1115_port,uint8_t sla
 /*ADS1115_startConversionPolled:
  *Funcion que inicia la conversion.
  *Es utilizada cuando se usa el sensor con la intervencion del pin READY.*/
-void ADS1115_startConversionPolled(signalADS1115 * signalADS1115_port,uint8_t slaveAddres){
+bool ADS1115_startConversionPolled(signalADS1115 * signalADS1115_port,uint8_t slaveAddres){
 	uint8_t wordWrite [3]={0};
 
 	wordWrite[0]=CONFIG_REG;
 	wordWrite[1]=((OS_BIT_CONVERSION<<7)|signalADS1115_port->channel<<4|signalADS1115_port->pga <<1|signalADS1115_port->operationMode);
 	wordWrite[2]=((signalADS1115_port->dataRate<<5)|(signalADS1115_port->comparadorMode<<4)|(signalADS1115_port->comparadorPolarity<<3)|(signalADS1115_port->latchingComparador<<2)|signalADS1115_port->stateComparator);
-	ADS1115_Transmit(slaveAddres, wordWrite,3);
+	if(FUNCTION_OK==ADS1115_Transmit(slaveAddres, wordWrite,3)){
+		return FUNCTION_OK;
+	}
+	else{
+		return FUNCTION_FALLED;
+	}
 }
 
 /*ADS1115_getConversionPolled:
