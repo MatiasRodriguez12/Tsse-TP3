@@ -12,10 +12,10 @@
 
 /*----------------------------------*/
 /*-----------SLAVE ADDRESS----------*/
-#define SLAVE_ADRRES_GND	0x48
-#define SLAVE_ADRRES_VDD	0x49
-#define SLAVE_ADRRES_SDA	0x4A
-#define SLAVE_ADRRES_SCL	0x4B
+#define SLAVE_ADDRES_GND	0x48
+#define SLAVE_ADDRES_VDD	0x49
+#define SLAVE_ADDRES_SDA	0x4A
+#define SLAVE_ADDRES_SCL	0x4B
 /*----------------------------------*/
 
 /*----------------------------------*/

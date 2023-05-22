@@ -35,7 +35,7 @@ void test_iniciar_canal_modo_diferential(void){
     signalADS1115 channelUno;
 
     ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
-    TEST_ASSERT_TRUE(ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADRRES_GND));
+    TEST_ASSERT_TRUE(ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND));
 }
 
 //Recuperar lectura del ads1115 - lectura por consulta
@@ -48,6 +48,6 @@ void test_recuperar_un_valor_de_lectura_de_adc_por_consulta(void){
     ADS1115_gpioReadyRead_fake.custom_fake = auxiliar_ads1115_gpioReadyRead;
 
     TEST_ASSERT_TRUE(ADS1115_gpioReadyInit(READY_port,READY_pin));
-    ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADRRES_GND);
-    TEST_ASSERT_EQUAL_HEX16(0x0AFF,ADS1115_getConversionPolled(&channelUno,SLAVE_ADRRES_GND));
+    ADS1115_channelInitPolled(&channelUno,SINGLE_MODE_A1,SLAVE_ADDRES_GND);
+    TEST_ASSERT_EQUAL_HEX16(0x0AFF,ADS1115_getConversionPolled(&channelUno,SLAVE_ADDRES_GND));
 }
