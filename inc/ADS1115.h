@@ -100,6 +100,25 @@
 /*--------------OTROS---------------*/
 #define FUNCTION_OK     true
 #define FUNCTION_FALLED false
+#define GPIOF           6
+#define GPIOB           2
+#define GPIO_PIN_8      8
+#define GPIO_PIN_9      9
+#define GPIO_PIN_13     13
+/*Puertos SDA y SCL a utilizar*/
+#define D14_port 	      GPIOB
+#define D14_pin  	      GPIO_PIN_9
+#define D15_port     	GPIOB
+#define D15_pin  	      GPIO_PIN_8
+#define i2c_SDA_port    D14_port
+#define i2c_SDA_pin     D14_pin
+#define i2c_SCL_port    D15_port
+#define i2c_SCL_pin     D15_pin
+/*Puerto de entrada por donde se leerá la señal READY*/
+#define READY_port	   D7_port
+#define READY_pin	      D7_pin
+#define D7_port 	      GPIOF
+#define D7_pin  	      GPIO_PIN_13
 /*----------------------------------*/
 
 /*--------------------------------------------------------------------------*/

@@ -109,14 +109,16 @@ uint16_t ADS1115_getConversionPolled(signalADS1115 * signalADS1115_port,uint8_t 
 
 	  while(conversionReady==false){
 
-		  if(ADS1115_gpioReadyRead()==true){
+		  if(ADS1115_gpioReadyRead(READY_port,READY_pin)==true){
 			  conversionReady=true;
 		  }
 	  }
 	  //-----------------------------------
 
 	wordWrite[0]=CONVERSION_REG;
-	ADS1115_Transmit(slaveAddres, wordWrite,1);
+	if (FUNCTION_OK!=ADS1115_Transmit(slaveAddres, wordWrite,1)){
+		return 0x0000;
+	}
 
 	ADS1115_Receive(slaveAddres,wordReading,2);
 	wordRead=((wordReading[0]<<8)|wordReading[1]);

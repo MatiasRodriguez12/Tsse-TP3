@@ -11,35 +11,17 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/*Puertos SDA y SCL a utilizar*/
-#define i2c_SDA_port    D14_port
-#define i2c_SDA_pin     D14_pin
-#define i2c_SCL_port    D15_port
-#define i2c_SCL_pin     D15_pin
-
-#define D14_port 	GPIOB
-#define D14_pin  	GPIO_PIN_9
-#define D15_port 	GPIOB
-#define D15_pin  	GPIO_PIN_8
-
-/*Puerto de entrada por donde se leerá la señal READY*/
-#define READY_port	D7_port
-#define READY_pin	D7_pin
-
-#define D7_port 	GPIOF
-#define D7_pin  	GPIO_PIN_13
-
 /*I2CGpio_init:
  *Función que inicializa la configuración de los puertos SDA y SCL.*/
 void I2CGpio_init(void);
 
 /*gpioADS1115Ready_init:
  *Función que inicializa la configuración del puerto de entrada por donde se leerá la señal READY.*/
-void ADS1115_gpioReadyInit(void);
+bool ADS1115_gpioReadyInit(uint8_t gpio_port, uint8_t gpio_pin);
 
 /*gpioADS1115Ready_init:
  *Función lee el estado del puerto de entrada.*/
-bool ADS1115_gpioReadyRead(void);
+bool ADS1115_gpioReadyRead(uint8_t gpio_port, uint8_t gpio_pin);
 
 /*ADS1115_Transmit:
  *Función que envia datos desde el Master al Esclavo.
