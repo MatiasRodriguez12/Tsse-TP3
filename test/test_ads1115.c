@@ -35,7 +35,7 @@ void test_iniciar_canal_modo_single(void) {
 }
 
 //Inicializar configuración de canal A1 en modo single - lectura por consulta
-void test_iniciar_canal_modo_diferential(void){
+void test_iniciar_canal_modo_single_por_consulta(void){
     signalADS1115 channelUno;
 
     ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
