@@ -5,6 +5,8 @@
 #define CONVERSION_VALUE_READ   0x5FFF
 #define MASK_BITS_HIGH          0xFF00
 #define MASK_BITS_LOW           0x00FF
+#define UMBRAL_LOW              0x000F
+#define UMBRAL_HIGH             0x00FF
 
 //--------------------Funciones auxiliares--------------------
 bool auxiliar_ads1115_transmit(uint8_t slaveAddres, uint8_t *word,uint16_t nroBytes) {
@@ -69,4 +71,17 @@ void test_convertir_lectura_binaria_a_flotante(void){
     result = (FULL_RANGE_PG0/CUENTA_MAXIMA_ADC)*CONVERSION_VALUE_READ; 
     ADS1115_getConversionPolled(&channelUno,SLAVE_ADDRES_GND);
     TEST_ASSERT_EQUAL_FLOAT(result,ADS1115_getValueVoltage(&channelUno));
+}
+
+//Cambiando los parámetros de configuración del canal de conversión - configurando umbral de ads1115.
+void test_cambiar_parametros_de_configuracion_de_un_canal(void){
+    signalADS1115 channelCero;
+
+    ADS1115_Transmit_fake.custom_fake = auxiliar_ads1115_transmit;
+    ADS1115_channelInit(&channelCero,SINGLE_MODE_A0);
+    TEST_ASSERT_TRUE(ADS1115_updateThreshold(SLAVE_ADDRES_GND,UMBRAL_LOW,UMBRAL_HIGH));
+    ADS1115_updateComparatorMode(&channelCero,COMPARATOR_WINDOW);
+    TEST_ASSERT_EQUAL(COMPARATOR_WINDOW,channelCero.comparadorMode);
+    ADS1115_updateComparatorPolarity(&channelCero,ALERT_ACTIVE_LOW);
+    TEST_ASSERT_EQUAL(ALERT_ACTIVE_LOW,channelCero.comparadorPolarity);
 }
