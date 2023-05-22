@@ -28,14 +28,14 @@ bool ADS1115_gpioReadyRead(uint8_t gpio_port, uint8_t gpio_pin);
  *Parametros: slaveAddres - Dirección del esclavo.
  *			  word - datos a enviar.
  *			  nroBytes - Cantidad de bytes a enviar*/
-bool ADS1115_Transmit(uint8_t slaveAddres, uint8_t *word,uint16_t nroBytes);
+bool ADS1115_Transmit(uint8_t slaveAddres, uint8_t *word, uint16_t nroBytes);
 
 /*ADS1115_Receive:
  *Función que lee los datos del esclavo.
  *Parametros: slaveAddres - Dirección del esclavo.
  *			  word - Lugar donde se va a almacenar la información.
  *			  nroBytes - Cantidad de bytes a recibir*/
-void ADS1115_Receive(uint8_t slaveAddres,uint8_t *word,uint16_t nroBytes);
+void ADS1115_Receive(uint8_t slaveAddres, uint8_t *word, uint16_t nroBytes);
 
 /*ADS1115_delay:
  *Función que realiza un delay bloqueante.
